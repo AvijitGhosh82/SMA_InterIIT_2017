@@ -15,6 +15,10 @@ def main():
 def index():
 	return render_template('index.html')
 
+@app.route("/panel")
+def panel():
+	return render_template('panel.html')
+
 
 
 if __name__ == "__main__":
