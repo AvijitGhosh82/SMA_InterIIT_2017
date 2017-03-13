@@ -1,10 +1,13 @@
 import sys
 sys.path.append('../')
+import pandas
 
-from bseapi.BSEDailyStockQuotes import BSEDailyStockQuotes 
+import quandl
+quandl.ApiConfig.api_key = 'KfAoeT8ysydZySAKGaE9'
+
+# data = quandl.get('BSE/BOM533171')
+data = quandl.get('BSE/SENSEX')
+
+data.to_csv('sensex.csv', sep='\t', encoding='utf-8')
 
 
-lstCodes = ["532885"]  
-data = BSEDailyStockQuotes(lstCodes)  
-
-data.print_txt_output()  
