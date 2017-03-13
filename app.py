@@ -2,6 +2,11 @@ from flask import Flask
 from flask import Flask, render_template,url_for,request,session,redirect
 from flask_session import Session
 
+import sys
+sys.path.append('../')
+
+from bseapi import BSEDailyStockQuotes 
+
 
 app = Flask(__name__)
 sess=Session()
