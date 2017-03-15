@@ -87,7 +87,7 @@
     input:valid ~ label {
         top: -20px;
         font-size: 14px;
-        color: purple;
+        color: blue;
     }
     /* BOTTOM BARS ================================= */
     
@@ -104,7 +104,7 @@
         width: 0;
         bottom: 1px;
         position: absolute;
-        background: purple;
+        background: blue;
         transition: 0.2s ease all;
         -moz-transition: 0.2s ease all;
         -webkit-transition: 0.2s ease all;
@@ -145,7 +145,7 @@
     
     @-webkit-keyframes inputHighlighter {
         from {
-            background: purple;
+            background: blue;
         }
         to {
             width: 0;
@@ -155,7 +155,7 @@
     
     @-moz-keyframes inputHighlighter {
         from {
-            background: purple;
+            background: blue;
         }
         to {
             width: 0;
@@ -165,7 +165,7 @@
     
     @keyframes inputHighlighter {
         from {
-            background: purple;
+            background: blue;
         }
         to {
             width: 0;
@@ -177,10 +177,10 @@
 
 <body>
     <div class="wrapper">
-        <div class="sidebar" data-color="purple" data-image="/static/assets/img/sidebar-5.jpg">
+        <div class="sidebar" data-color="blue" data-image="/static/assets/img/sidebar-5.jpg">
             <!--
 
-				Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
+				Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | blue"
 				Tip 2: you can also add an image using data-image tag
 
 		-->
@@ -255,24 +255,25 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
+                            <form name="index_post" id="index_post" action="index_post" method="POST" novalidate>
+                                
                                 <div class="header" style="text-align: center;">
                                     <h4 class="title">Ticker Symbol</h4>
                                     <!-- <p class="category">Company to show news for</p> -->
                                 </div>
                                 <div class="content" style="text-align: center; width: 30%; margin: 0 auto;">
                                     <div class="group" style="text-align: center;">
-                                        <input type="text" required>
+                                        <input type="text" name="share" required>
                                         <span class="highlight"></span>
                                         <!-- <span class="bar"></span> -->
                                         <label>Ticker</label>
                                     </div>
-                                    <a href="{{ url_for('panel') }}" class="waves-effect waves-light btn purple">
-                                        <i class="material-icons left">Analyse</i>
-                                    </a>
+                                        <input type="submit" name="index_post" value="Analyse" class="waves-effect waves-light btn blue">
                                     <div class="footer">
                                     </div>
                                 </div>
                             </div>
+                        </form>
                         </div>
                     </div>
                     </td>

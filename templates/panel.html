@@ -24,6 +24,9 @@
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="/static/assets/css/demo.css" rel="stylesheet" />
 
+    <script type="text/javascript" src="http://kozea.github.com/pygal.js/latest/pygal-tooltips.min.js"></script>
+
+
 
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
@@ -34,11 +37,11 @@
 <body>
 
 <div class="wrapper">
-    <div class="sidebar" data-color="purple" data-image="/static/assets/img/sidebar-5.jpg">
+    <div class="sidebar" data-color="blue" data-image="/static/assets/img/sidebar-5.jpg">
 
     <!--
 
-        Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
+        Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | blue"
         Tip 2: you can also add an image using data-image tag
 
     -->
@@ -121,6 +124,13 @@
 
         <div class="content">
             <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                            <div class="card">
+                                {{ line_chart.render()|safe }}
+                            </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-4">
                         <div class="card">
@@ -386,14 +396,14 @@
 
         	demo.initChartist();
 
-        	$.notify({
-            	icon: 'pe-7s-gift',
-            	message: "Welcome to <b>Light Bootstrap Dashboard</b> - a beautiful freebie for every web developer."
+        	// $.notify({
+         //    	icon: 'pe-7s-gift',
+         //    	message: "Welcome to <b>Light Bootstrap Dashboard</b> - a beautiful freebie for every web developer."
 
-            },{
-                type: 'info',
-                timer: 4000
-            });
+         //    },{
+         //        type: 'info',
+         //        timer: 4000
+         //    });
 
     	});
 	</script>
