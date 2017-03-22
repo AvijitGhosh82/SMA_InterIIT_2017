@@ -38,12 +38,12 @@ def index_post():
 
 
 	testfile = urllib.URLopener()
-	testfile.retrieve("https://www.google.com/finance/historical?output=csv&q="+share, "data/"+share+".csv")
+	testfile.retrieve("https://www.google.com/finance/historical?output=csv&q="+share, "data/"+share+".csv") #&startdate=Jan+01%2C+2010
 
 	global line_chart
 
 
-	line_chart = pygal.Line(style=BlueStyle, disable_xml_declaration=True)
+	line_chart = pygal.Line(style=BlueStyle, disable_xml_declaration=True, height=200, show_y_labels=False, show_legend=False, dots_size = 1, fill=True)
 	line_chart.force_uri_protocol = 'http'
 
 	line_chart.title = share+' Stock'
