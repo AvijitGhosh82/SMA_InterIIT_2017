@@ -1,10 +1,9 @@
 from flask import Flask
 from flask import Flask, render_template,url_for,request,session,redirect
 from flask_session import Session
-
+from PriceScraper import PriceScraper
 import pygal
 import csv
-import urllib
 
 import sys
 sys.path.append('../')
@@ -36,10 +35,8 @@ def index_post():
 	session['share'] = request.form['share']
 	share = session.get('share', None)
 
-
-	testfile = urllib.URLopener()
-	testfile.retrieve("https://www.google.com/finance/historical?output=csv&q="+share, "data/"+share+".csv") #&startdate=Jan+01%2C+2010
-
+	my_list = PriceScraper.get_list(share)
+	
 	global line_chart
 
 
@@ -48,19 +45,11 @@ def index_post():
 
 	line_chart.title = share+' Stock'
 
-	with open("data/"+share+".csv", 'r') as my_file:
-	    reader = csv.reader(my_file)
-	    my_list = list(reader)
-
-	header = my_list[0]
-	my_list=my_list[1:]
-	my_list.reverse()
-
-
+	
 	pr = []
 	x = []
 	for p in my_list:
-		pr.append(float(p[4]))
+		pr.append(float(p[1]))
 		x.append(p[0])
 
 	line_chart.x_labels = x
