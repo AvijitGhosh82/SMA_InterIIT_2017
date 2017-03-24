@@ -10,20 +10,37 @@ IIT Kharagpur
 
 # Acknowledgement of Used packages/libraries:
 numpy
+
 scipy
+
 simplejson
+
 nltk==3.0.0
+
 newspaper
+
 pandas
+
 dateparser
+
 gensim
+
 tensorflow
+
 torrequest
+
 scikit-learn
+
 flask
+
 flask-session
+
 pygal
+
 lxml
+
 beautifulsoup
+
 requests==2.6.0
+
 pandas-datareader
