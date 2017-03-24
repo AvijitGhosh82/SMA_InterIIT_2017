@@ -4,21 +4,28 @@ from flask_session import Session
 from PriceScraper import PriceScraper
 import pygal
 import csv
-
+from final_scraper import *
 import sys
 sys.path.append('../')
+
 
 
 app = Flask(__name__)
 sess=Session()
 
-NASDAQ=['AAPL', 'CSCO', 'INTC', 'MSFT']
-NYSE=['DIS', 'WMT', 'VZ', 'V', 'UTX', 'UNH', 'TRV', 'PG', 'PFE', 'NKE', 'MRK', 'MMM', 'MCD', 'JPM', 
+
+TICKERS = ['AAPL', 'CSCO', 'INTC', 'MSFT', 'DIS', 'WMT', 'VZ', 'V', 'UTX', 'UNH', 'TRV', 'PG', 'PFE', 'NKE', 'MRK', 'MMM', 'MCD', 'JPM', 
 'JNJ', 'IBM', 'HD', 'GS', 'GE', 'XOM', 'DD', 'KO', 'CVX', 'CAT', 'BA', 'AXP']
 
-global line_chart
+NAMES=['Apple', 'Cisco', 'Intel', 'Microsoft', 'Disney', 'Walmart', 'Verizon', 'Visa', 'United Technologies', 'United Health', 'The Travelers Inc.'
+, 'Proctor and Gamble', 'Pfizer', 'Nike', 'Merck', '3M', 'Macdonalds', 'JPMorgan Chase','Johnson and Johnson', 'IBM', 'Home Depot', 'Goldman Sachs', 'General Electric', 'Exxon Mobile',
+'E I du Pont de Nemours and Co', 'Coca Cola', 'Chevron', 'Caterpillar', 'Boeing', 'American Express']
 
-from pygal.style import BlueStyle
+global line_chart1, line_chart2, line_chart3, line_chart4
+global name_neg1, name_neg2, name_pos1, name_pos2
+
+
+from pygal.style import BlueStyle, DefaultStyle
 
 
 
@@ -32,29 +39,117 @@ def index():
 
 @app.route('/index_post', methods=['POST'])
 def index_post():
-	session['share'] = request.form['share']
-	share = session.get('share', None)
+	data_price = {}
 	p_scraper = PriceScraper()
-	my_list = p_scraper.get_list(share)
-	print ("app.py length from PriceScraper", len(my_list))
-	global line_chart
+	# my_list = p_scraper.get_list(share) # delete this line
+	i = 5
+	a = len(TICKERS)
+	while (True):
+		try:
+			a -= 1
+			if (a==0):
+				break
+			print ("try", TICKERS[a])
+			tmp = p_scraper.get_list(TICKERS[a])
+			data_price[tmp[1]] = [TICKERS[a], tmp[0]]
+		except Exception as e:
+			print (e, TICKERS[a])
+			a += 1
+			continue
+	print ("scraping prices done")
+	list_changes = list(data_price.keys())
+	list_changes.sort()
+	stocks = []
+	stocks.append(data_price[list_changes[0]])
+	stocks[len(stocks) - 1].append(list_changes[0])
+	stocks.append(data_price[list_changes[1]])
+	stocks[len(stocks) - 1].append(list_changes[1])
+	stocks.append(data_price[list_changes[len(list_changes) - 1]])
+	stocks[len(stocks) - 1].append(list_changes[len(list_changes) - 1])
+	stocks.append(data_price[list_changes[len(list_changes) - 2]])
+	stocks[len(stocks) - 1].append(list_changes[len(list_changes) - 2])
+	del data_price
+	print ("app.py debug", "got four stocks", stocks[0][0], stocks[1][0], stocks[2][0], stocks[3][0])
+	# print ("trying final scraper")
+	# start()
+	# print ("ending final scraper")
+	neg1=stocks[0][0]
+	neg2=stocks[1][0]
+	pos1=stocks[2][0]
+	pos2=stocks[3][0]
+
+	global line_chart1, line_chart2, line_chart3, line_chart4
+	global name_neg1, name_neg2, name_pos1, name_pos2
+
+	name_neg1=NAMES[TICKERS.index(neg1)]
+	name_neg2=NAMES[TICKERS.index(neg2)]
+	name_pos1=NAMES[TICKERS.index(pos1)]
+	name_pos2=NAMES[TICKERS.index(pos2)]
 
 
-	line_chart = pygal.Line(style=BlueStyle, disable_xml_declaration=True, height=200, show_y_labels=False, show_legend=False, dots_size = 1, fill=True)
-	line_chart.force_uri_protocol = 'http'
 
-	line_chart.title = share+' Stock'
+	#Most Pos
 
-	
-	pr = []
-	x = []
-	for p in my_list:
-		pr.append(float(p[1]))
-		x.append(p[0])
+	line_chart1 = pygal.Line(style=BlueStyle, disable_xml_declaration=True, height=200, show_y_labels=False, show_legend=False, dots_size = 1, fill=True)
+	line_chart1.force_uri_protocol = 'http'
 
-	line_chart.x_labels = x
+	line_chart1.title = pos2+' Stock'
 
-	line_chart.add(share, pr)
+	pr1 = []
+	x1 = []
+	for p in stocks[3][1]:
+		pr1.append(float(p[1]))
+		x1.append(p[0])
+
+	line_chart1.x_labels = x1
+	line_chart1.add(pos2, pr1)
+
+	#Second most pos
+
+	line_chart2 = pygal.Line(style=BlueStyle, disable_xml_declaration=True, height=200, show_y_labels=False, show_legend=False, dots_size = 1, fill=True)
+	line_chart2.force_uri_protocol = 'http'
+	line_chart2.title = pos1+' Stock'
+
+	pr2 = []
+	x2 = []
+	for p in stocks[2][1]:
+		pr2.append(float(p[1]))
+		x2.append(p[0])
+
+	line_chart2.x_labels = x1
+	line_chart2.add(pos1, pr2)
+
+	#Second most neg
+
+	line_chart3 = pygal.Line(style=DefaultStyle, disable_xml_declaration=True, height=200, show_y_labels=False, show_legend=False, dots_size = 1, fill=True)
+	line_chart3.force_uri_protocol = 'http'
+
+	line_chart3.title = neg2+' Stock'
+
+	pr3 = []
+	x3 = []
+	for p in stocks[1][1]:
+		pr3.append(float(p[1]))
+		x3.append(p[0])
+
+	line_chart3.x_labels = x3
+	line_chart3.add(pos1, pr3)
+
+	#Most neg
+
+	line_chart4 = pygal.Line(style=DefaultStyle, disable_xml_declaration=True, height=200, show_y_labels=False, show_legend=False, dots_size = 1, fill=True)
+	line_chart4.force_uri_protocol = 'http'
+
+	line_chart4.title = neg1+' Stock'
+
+	pr4 = []
+	x4 = []
+	for p in stocks[0][1]:
+		pr4.append(float(p[1]))
+		x4.append(p[0])
+
+	line_chart4.x_labels = x4
+	line_chart4.add(pos2, pr4)
 
 	return redirect(url_for('panel'))
 
@@ -62,7 +157,8 @@ def index_post():
 def panel():
 	share = session.get('share', None)
 
-	return render_template('panel.html', line_chart=line_chart)
+	return render_template('panel.html', line_chart1=line_chart1,line_chart2=line_chart2, line_chart3=line_chart3, line_chart4=line_chart4, name_pos1=name_pos1,
+		name_pos2=name_pos2, name_neg1=name_neg1, name_neg2=name_neg2)
 
 
 

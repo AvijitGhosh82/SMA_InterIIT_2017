@@ -190,5 +190,8 @@ def main():
     discovery = Discovery()
     discovery.start()
 
+def start():
+	main()
+
 if __name__ == '__main__':
     main()

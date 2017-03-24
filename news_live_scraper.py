@@ -65,7 +65,7 @@ def seekingalpha(stock):
     df=pd.DataFrame({'content':content,'title':title,'date':date,'ticker':ticker, 'source':source, 'url': url})
     return df
 
-a = seekingalpha("AAPL")
+# a = seekingalpha("AAPL")
 # count = 0
 # for a in d['entries']:
 #     try:

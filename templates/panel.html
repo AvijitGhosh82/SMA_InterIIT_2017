@@ -61,27 +61,27 @@
                 </div>
                 <ul class="nav">
                     <li>
-                        <a data-scroll href="#prices">
+                        <a data-scroll href="#c1">
                             <i class="pe-7s-plus"></i>
-                            <p>TOP 1</p>
+                            <p>{{name_pos2}}</p>
                         </a>
                     </li>
                     <li>
-                        <a data-scroll href="#timels">
+                        <a data-scroll href="#c2">
                             <i class="pe-7s-plus"></i>
-                            <p>Top 2</p>
+                            <p>{{name_pos1}}</p>
                         </a>
                     </li>
                     <li>
-                        <a href="table.html">
+                        <a data-scroll href="#c3">
                             <i class="pe-7s-plus"></i>
-                            <p>Bottom 1</p>
+                            <p>{{name_neg2}}</p>
                         </a>
                     </li>
                     <li>
-                        <a href="typography.html">
+                        <a data-scroll href="#c4">
                             <i class="pe-7s-plus"></i>
-                            <p>Bottom 2</p>
+                            <p>{{name_neg1}}</p>
                         </a>
                     </li>
                     
@@ -105,232 +105,77 @@
             </nav> -->
             <div class="content">
                 <div class="container-fluid">
+
+                    <h1 id="c1">{{name_pos2}}</h1>
+                    <!-- <p>Yesterday's Price:</p>
+                    <p>Today's Price:</p>
+                    <p>Return:</p> -->
+
                     <div class="row">
                         <div class="col-md-12">
                             <div  class="card" id="prices">
-                                {{ line_chart.render()|safe }}
+                                {{ line_chart1.render()|safe }}
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="card"  id="timels">
-                                <div id="timeline"></div>
+                            <div class="card">
+                                <div id="timeline1"></div>
                             </div>
                         </div>
                     </div>
-<!--                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="header">
-                                    <h4 class="title">News Title</h4>
-                                    <p class="category">newscompany.com</p>
-                                </div>
-                                <div class="content">
-                                    <span>edfgjdtirf ertk jwlrt g wrklgjer y qkejwrts wl rjtwkerj wteortjw lket jwlktn sklrtn e</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="header">
-                                    <h4 class="title">News Title</h4>
-                                    <p class="category">newscompany.com</p>
-                                </div>
-                                <div class="content">
-                                    <span>edfgjdtirf ertk jwlrt g wrklgjer y qkejwrts wl rjtwkerj wteortjw lket jwlktn sklrtn e</span>
-                                </div>
+
+                    <h1 id="c2">{{name_pos1}}</h1>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div  class="card">
+                                {{ line_chart2.render()|safe }}
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-12">
                             <div class="card">
-                                <div class="header">
-                                    <h4 class="title">Email Statistics</h4>
-                                    <p class="category">Last Campaign Performance</p>
-                                </div>
-                                <div class="content">
-                                    <div id="chartPreferences" class="ct-chart ct-perfect-fourth"></div>
-                                    <div class="footer">
-                                        <div class="legend">
-                                            <i class="fa fa-circle text-info"></i> Open
-                                            <i class="fa fa-circle text-danger"></i> Bounce
-                                            <i class="fa fa-circle text-warning"></i> Unsubscribe
-                                        </div>
-                                        <hr>
-                                        <div class="stats">
-                                            <i class="fa fa-clock-o"></i> Campaign sent 2 days ago
-                                        </div>
-                                    </div>
-                                </div>
+                                <div id="timeline2"></div>
                             </div>
                         </div>
-                        <div class="col-md-8">
-                            <div class="card">
-                                <div class="header">
-                                    <h4 class="title">Users Behavior</h4>
-                                    <p class="category">24 Hours performance</p>
-                                </div>
-                                <div class="content">
-                                    <div id="chartHours" class="ct-chart"></div>
-                                    <div class="footer">
-                                        <div class="legend">
-                                            <i class="fa fa-circle text-info"></i> Open
-                                            <i class="fa fa-circle text-danger"></i> Click
-                                            <i class="fa fa-circle text-warning"></i> Click Second Time
-                                        </div>
-                                        <hr>
-                                        <div class="stats">
-                                            <i class="fa fa-history"></i> Updated 3 minutes ago
-                                        </div>
-                                    </div>
-                                </div>
+                    </div>
+
+                    <h1 id="c3">{{name_neg2}}</h1>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div  class="card">
+                                {{ line_chart3.render()|safe }}
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="card ">
-                                <div class="header">
-                                    <h4 class="title">2014 Sales</h4>
-                                    <p class="category">All products including Taxes</p>
-                                </div>
-                                <div class="content">
-                                    <div id="chartActivity" class="ct-chart"></div>
-                                    <div class="footer">
-                                        <div class="legend">
-                                            <i class="fa fa-circle text-info"></i> Tesla Model S
-                                            <i class="fa fa-circle text-danger"></i> BMW 5 Series
-                                        </div>
-                                        <hr>
-                                        <div class="stats">
-                                            <i class="fa fa-check"></i> Data information certified
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div id="timeline3"></div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="card ">
-                                <div class="header">
-                                    <h4 class="title">Tasks</h4>
-                                    <p class="category">Backend development</p>
-                                </div>
-                                <div class="content">
-                                    <div class="table-full-width">
-                                        <table class="table">
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <label class="checkbox">
-                                                            <input type="checkbox" value="" data-toggle="checkbox">
-                                                        </label>
-                                                    </td>
-                                                    <td>Sign contract for "What are conference organizers afraid of?"</td>
-                                                    <td class="td-actions text-right">
-                                                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                            <i class="fa fa-edit"></i>
-                                                        </button>
-                                                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <label class="checkbox">
-                                                            <input type="checkbox" value="" data-toggle="checkbox" checked="">
-                                                        </label>
-                                                    </td>
-                                                    <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                                                    <td class="td-actions text-right">
-                                                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                            <i class="fa fa-edit"></i>
-                                                        </button>
-                                                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <label class="checkbox">
-                                                            <input type="checkbox" value="" data-toggle="checkbox" checked="">
-                                                        </label>
-                                                    </td>
-                                                    <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                                                    </td>
-                                                    <td class="td-actions text-right">
-                                                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                            <i class="fa fa-edit"></i>
-                                                        </button>
-                                                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <label class="checkbox">
-                                                            <input type="checkbox" value="" data-toggle="checkbox">
-                                                        </label>
-                                                    </td>
-                                                    <td>Create 4 Invisible User Experiences you Never Knew About</td>
-                                                    <td class="td-actions text-right">
-                                                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                            <i class="fa fa-edit"></i>
-                                                        </button>
-                                                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <label class="checkbox">
-                                                            <input type="checkbox" value="" data-toggle="checkbox">
-                                                        </label>
-                                                    </td>
-                                                    <td>Read "Following makes Medium better"</td>
-                                                    <td class="td-actions text-right">
-                                                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                            <i class="fa fa-edit"></i>
-                                                        </button>
-                                                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <label class="checkbox">
-                                                            <input type="checkbox" value="" data-toggle="checkbox">
-                                                        </label>
-                                                    </td>
-                                                    <td>Unfollow 5 enemies from twitter</td>
-                                                    <td class="td-actions text-right">
-                                                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                            <i class="fa fa-edit"></i>
-                                                        </button>
-                                                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="footer">
-                                        <hr>
-                                        <div class="stats">
-                                            <i class="fa fa-history"></i> Updated 3 minutes ago
-                                        </div>
-                                    </div>
-                                </div>
+                    </div>
+
+                    <h1 id="c4">{{name_neg1}}</h1>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div  class="card" >
+                                {{ line_chart4.render()|safe }}
                             </div>
                         </div>
-                    </div> -->
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div id="timeline4"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <footer class="footer">
@@ -391,17 +236,28 @@ $(document).ready(function() {
 
     demo.initChartist();
     var options = {
-        hash_bookmark: true,
+        hash_bookmark: false,
         scale_factor: 1,
         //ga_property_id: null,
         //is_full_embed: false,
         timenav_position: "top",
         language: "en"
     }
-    var timeline = new TL.Timeline('timeline', '{{ url_for('static', filename='data/events.json') }}', options);
+    var timeline1 = new TL.Timeline('timeline1', '{{ url_for('static', filename='data/events.json') }}', options);
+    var timeline2 = new TL.Timeline('timeline2', '{{ url_for('static', filename='data/events.json') }}', options);
+    var timeline3 = new TL.Timeline('timeline3', '{{ url_for('static', filename='data/events.json') }}', options);
+    var timeline4 = new TL.Timeline('timeline4', '{{ url_for('static', filename='data/events.json') }}', options);
+
+
     window.onresize = function(event) {
-        timeline.updateDisplay();
+        timeline1.updateDisplay();
+        timeline2.updateDisplay();
+        timeline3.updateDisplay();
+        timeline4.updateDisplay();
+
     }
+
+    
 
     smoothScroll.init();
 
