@@ -16,6 +16,7 @@ def bloomberg(ticker):
 	newsitems = div.findAll('article', {'class' : 'news-story'})
 	for n in newsitems:
 		tst=n.find('time', {"class": "news-story__published-at"}).text
+		
 		if(dfhg)
 			ts.append(tst)
 			title.append(n.find('a', {"class": "news-story__url"}).text)

@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Mar 23 01:46:27 2017
-
-@author: sid95
-"""
 
 from bs4 import BeautifulSoup
 import lxml
@@ -25,78 +19,46 @@ def google_finance(company_ticker):
     content = []
     news_source = []
     sources=[]
+    url = []
     dates = source.find_all('span',{'class':"date"})
     partial_sources = source.find_all('div',{'class':"byline"})
     for line in partial_sources:
         for row in line.find_all('span',{'class':"src"}):
             sources.append(row)
-    last_date = "Mar 22, 2017"        
-    last_to_last_date = "Mar 21, 2017"
-    last_date = datetime.strptime(last_date,"%b %d, %Y")
-    last_to_last_date = datetime.strptime(last_to_last_date,"%b %d, %Y")
+
+    today= datetime.now().day
+
     for i in range(100):
         print i
-        if dates[i].text[-1]!='o':
-            temp = dates[i].text
-            temp = datetime.strptime(temp,"%b %d, %Y")
-            if temp==last_date or temp==last_to_last_date:
-                print 'found'
-                article_initial = articles[i]
-                link = article_initial.find('a')['href']
-                article = Article(link)
-                try:
-                    article.download()
-                    article.parse()
-                    date.append(dates[i].text)
-                    news_source.append(sources[i].text)
-                    content.append(article.text)
-                    title.append((article_initial.text))
-                except:
-                    print 'xmlsyntaxerror'
-                    continue
-    ticker = [company_ticker]*len(content)
-    df=pd.DataFrame({'content':content,'title':title,'date':date,'ticker':ticker})
-    return df
-
-def bloomberg(ticker):
-    import requests
-    url = "https://www.bloomberg.com/quote/"+ticker+":US"
-    r  = requests.get(url)
-    data = r.text
-
-    ts=[]
-    title=[]
-    urls=[]
-    cont=[]
-
-    soup = BeautifulSoup(data)
-    div= soup.find("div", { "class" : "news__state active" })
-    newsitems = div.findAll('article', {'class' : 'news-story'})
-    for n in newsitems:
-        tst=n.find('time', {"class": "news-story__published-at"}).text
-        day= datetime.strptime(last_date,"%b/%d/%Y")
-        yesterday=d = datetime.today() - timedelta(days=1)
-        dayb4=d = datetime.today() - timedelta(days=2)
-        if(day == yesterday or day== dayb4)
-            tit=n.find('a', {"class": "news-story__url"}).text
-            u=n.find('a', {"class": "news-story__url"})['href']
+        if dates[i].text[-1]!='o':        ###checking the format of hours ago
+            article_time = dates[i].text
+            article_time = datetime.strptime(article_time,"%b %d, %Y")
+            article_time = article_time+timedelta(hours=12)   ##considering time to be midday 12 when time not available
+        else:
+            temp = dates[i].text          
+            if temp[1]==' ':              ##checking single digit hours
+                hours = temp[0]
+            else:
+                hours = temp[0:2]
+            current_time = datetime.now()
+            article_time = current_time - timedelta(hours=int(hours))
+        if (abs(article_time.day-today) in [1,2]):
+            print 'found'
+            article_initial = articles[i]
+            link = article_initial.find('a')['href']
+            article = Article(link)
+            article_time = datetime.strftime(article_time,"%Y-%m-%d %H:%M:%S")   
             try:
-                r2  = requests.get(u)
-                print u
-                data2 = r2.text
-                soup2 = BeautifulSoup(data2)
-                div2= soup2.find("div", { "class" : "body-copy" })
-                cont.append(div2.text)
-                ts.append(tst)
-                urls.append(u)
-                title.append(tit)
+                article.download()
+                article.parse()
+                date.append(article_time)
+                news_source.append(sources[i].text)
+                url.append(link)
+                content.append(article.text)
+                title.append((article_initial.text))
             except:
+                print 'xmlsyntaxerror'
                 continue
-    arrticker = [ticker]*len(cont)
-    df=pd.DataFrame({'content':cont,'title':title,'date':ts,'ticker':arrticker})
+    ticker = [company_ticker]*len(content)
+    df=pd.DataFrame({'content':content,'title':title,'date':date,'ticker':ticker,'source':news_source,'url':url})
     return df
-    
-df=google_finance('GS')
-    
-
-   

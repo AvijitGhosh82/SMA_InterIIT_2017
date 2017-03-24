@@ -34,9 +34,9 @@ def index():
 def index_post():
 	session['share'] = request.form['share']
 	share = session.get('share', None)
-
-	my_list = PriceScraper.get_list(share)
-	
+	p_scraper = PriceScraper()
+	my_list = p_scraper.get_list(share)
+	print ("app.py length from PriceScraper", len(my_list))
 	global line_chart
 
 
