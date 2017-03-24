@@ -22,6 +22,7 @@ import numpy as np
 import pandas as pd
 import time
 from relevance_predictor import predict_relevance
+
 TICKERS = ['AAPL', 'CSCO', 'INTC', 'MSFT', 'DIS', 'WMT', 'VZ', 'V', 'UTX', 'UNH', 'TRV', 'PG', 'PFE', 'NKE', 'MRK', 'MMM', 'MCD', 'JPM',
            'JNJ', 'IBM', 'HD', 'GS', 'GE', 'XOM', 'DD', 'KO', 'CVX', 'CAT', 'BA', 'AXP']
 
@@ -109,17 +110,17 @@ def start_scraper(tickers):
 #     data = pd.read_csv(ticker + '.csv', sep="\t", encoding="utf8")
 #     df.append([df, data], ignore_index=True)
 
-    print predict_relevance(discovery.df)
+    # print predict_relevance(discovery.df)
     end = time.time()
+    return 1
     # print(end - start)
 
 
-def read_df():
-    df = pd.DataFrame()
-    for ticker in top_tickers:
-        data = pd.read_csv(ticker + '.csv', sep="\t", encoding="utf8")
-        df.concat([df, data], ignore_index=True)
-
-    return df
+def read_df(ticker):
+    # df = pd.DataFrame()
+    # for ticker in top_tickers:
+    data = pd.read_csv(ticker + '.csv', sep="\t", encoding="utf8")
+    # .concat([df, data], ignore_index=True)
+    return data
 if __name__ == '__main__':
     start_scraper("V")

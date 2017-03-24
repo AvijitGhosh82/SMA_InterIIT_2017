@@ -9,6 +9,7 @@ import sys
 import pandas as pd
 import numpy as np
 from live_scraper import start_scraper, read_output
+from relevance_predictor import predict_relevance
 sys.path.append('../')
 
 
@@ -82,8 +83,16 @@ def index_post():
     pos2 = stocks[3][0]
 
     top_tickers = [neg1, neg2, pos1, pos2]
-    start_scraper(top_tickers)
-    global_df = read_df
+    if start_scraper(top_tickers) == 1:
+        global_df = read_df(top_tickers)
+    else:
+        global_df = None
+        print "ERROR"
+
+    for i, ticker in enumerate(top_tickers):
+        df = predict_relevance(read_df(ticker))
+        df.to_csv(ticker + '_out.csv', sep='\t', encoding='utf8')
+
     global line_chart1, line_chart2, line_chart3, line_chart4
     global name_neg1, name_neg2, name_pos1, name_pos2
 
