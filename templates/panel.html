@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <link rel="icon" type="image/png" href="/static/assets/img/favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Light Bootstrap Dashboard by Creative Tim</title>
+    <title>SMA</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
     <!-- Bootstrap core CSS     -->
@@ -21,27 +21,23 @@
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="/static/assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
-
     <link rel="stylesheet" href="{{ url_for('static', filename='css/timeline.css') }}?v1">
     <!--FONT-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts/font.default.css') }}?v1"> 
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts/font.default.css') }}?v1">
     <script src="/static/js/smooth-scroll.js"></script>
-
-
     <style>
-      html, body {
-        height:100%;
-        width:100%;
+    html,
+    body {
+        height: 100%;
+        width: 100%;
         padding: 0px;
         margin: 0px;
-      }
-      .tl-timeline {
-        height:500px;
-      }
-      
+    }
+    
+    .tl-timeline {
+        height: 500px;
+    }
     </style>
-
 </head>
 
 <body>
@@ -56,7 +52,7 @@
             <div class="sidebar-wrapper">
                 <div class="logo">
                     <a href="http://www.creative-tim.com" class="simple-text">
-                    Creative Tim
+                    Stocker
                 </a>
                 </div>
                 <ul class="nav">
@@ -84,8 +80,6 @@
                             <p>{{name_neg1}}</p>
                         </a>
                     </li>
-                    
-
                 </ul>
             </div>
         </div>
@@ -105,114 +99,118 @@
             </nav> -->
             <div class="content">
                 <div class="container-fluid">
-
                     <h1 id="c1">{{name_pos2}}</h1>
                     <!-- <p>Yesterday's Price:</p>
                     <p>Today's Price:</p>
                     <p>Return:</p> -->
-
                     <div class="row">
                         <div class="col-md-12">
-                            <div  class="card" id="prices">
+                            <div class="card" id="prices">
                                 {{ line_chart1.render()|safe }}
                             </div>
                         </div>
                     </div>
+                    {% for item in list2 %}
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
-                                <div id="timeline1"></div>
+                                <div class="header">
+                                    <h4 class="title"><a href="{{item[0]}}">{{item[2]}}</a></h4>
+                                    <p class="category">{{item[1]}}</p>
+                                </div>
+                                <div class="content">
+                                    <p>{{item[3]}}</p>
+                                    <h6>Score: {{item[5]}}</h6>
+                                    <h6>Polarity: {{item[4]}}</h6>
+                                </div>
+                                <!-- <div id="timeline1"></div> -->
                             </div>
                         </div>
                     </div>
-
+                    {% endfor %}
                     <h1 id="c2">{{name_pos1}}</h1>
-
                     <div class="row">
                         <div class="col-md-12">
-                            <div  class="card">
+                            <div class="card">
                                 {{ line_chart2.render()|safe }}
                             </div>
                         </div>
                     </div>
+                    {% for item in list1 %}
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
-                                <div id="timeline2"></div>
+                                <div class="header">
+                                    <h4 class="title"><a href="{{item[0]}}">{{item[2]}}</a></h4>
+                                    <p class="category">{{item[1]}}</p>
+                                </div>
+                                <div class="content">
+                                    <p>{{item[3]}}</p>
+                                    <h6>Score: {{item[5]}}</h6>
+                                    <h6>Polarity: {{item[4]}}</h6>
+                                </div>
+                                <!-- <div id="timeline2"></div> -->
                             </div>
                         </div>
                     </div>
-
+                    {% endfor %}
                     <h1 id="c3">{{name_neg2}}</h1>
-
                     <div class="row">
                         <div class="col-md-12">
-                            <div  class="card">
+                            <div class="card">
                                 {{ line_chart3.render()|safe }}
                             </div>
                         </div>
                     </div>
+                    {% for item in list4 %}
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
-                                <div id="timeline3"></div>
+                                <div class="header">
+                                    <h4 class="title"><a href="{{item[0]}}">{{item[2]}}</a></h4>
+                                    <p class="category">{{item[1]}}</p>
+                                    <!-- <img src="{{item[6]}}"/> -->
+                                </div>
+                                <div class="content">
+                                    <p>{{item[3]}}</p>
+                                    <h6>Score: {{item[5]}}</h6>
+                                    <h6>Polarity: {{item[4]}}</h6>
+                                </div>
+                                <!-- <div id="timeline3"></div> -->
                             </div>
                         </div>
                     </div>
-
+                    {% endfor %}
                     <h1 id="c4">{{name_neg1}}</h1>
-
                     <div class="row">
                         <div class="col-md-12">
-                            <div  class="card" >
+                            <div class="card">
                                 {{ line_chart4.render()|safe }}
                             </div>
                         </div>
                     </div>
+                    {% for item in list3 %}
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
-                                <div id="timeline4"></div>
+                                <div class="header">
+                                    <h4 class="title"><a href="{{item[0]}}">{{item[2]}}</a></h4>
+                                    <p class="category">{{item[1]}}</p>
+                                </div>
+                                <div class="content">
+                                    <p>{{item[3]}}</p>
+                                    <h6>Score: {{item[5]}}</h6>
+                                    <h6>Polarity: {{item[4]}}</h6>
+                                </div>
+                                <!-- <div id="timeline4"> -->
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
             </div>
-            <footer class="footer">
-                <div class="container-fluid">
-                    <nav class="pull-left">
-                        <ul>
-                            <li>
-                                <a href="#">
-                                Home
-                            </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                Company
-                            </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                Portfolio
-                            </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                               Blog
-                            </a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <p class="copyright pull-right">
-                        &copy;
-                        <script>
-                        document.write(new Date().getFullYear())
-                        </script> <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
-                    </p>
-                </div>
-            </footer>
         </div>
+    </div>
     </div>
 </body>
 <!--   Core JS Files   -->
@@ -234,41 +232,30 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
-    demo.initChartist();
-    var options = {
-        hash_bookmark: false,
-        scale_factor: 1,
-        //ga_property_id: null,
-        //is_full_embed: false,
-        timenav_position: "top",
-        language: "en"
-    }
-    var timeline1 = new TL.Timeline('timeline1', '{{ url_for('static', filename='data/events.json') }}', options);
-    var timeline2 = new TL.Timeline('timeline2', '{{ url_for('static', filename='data/events.json') }}', options);
-    var timeline3 = new TL.Timeline('timeline3', '{{ url_for('static', filename='data/events.json') }}', options);
-    var timeline4 = new TL.Timeline('timeline4', '{{ url_for('static', filename='data/events.json') }}', options);
+        // demo.initChartist();
+     // var options = {
+        //     hash_bookmark: false,
+   //     scale_factor: 1,
+    //     //ga_property_id: null,
+    //     //is_full_embed: false,
+    //     timenav_position: "top",
+    //     language: "en"
+    // }
+    // var timeline1 = new TL.Timeline('timeline1', '{{ url_for('static', filename='data/nishant.json') }}', options);
+    // var timeline2 = new TL.Timeline('timeline2', '{{ url_for('static', filename='data/nishant.json') }}', options);
+    // var timeline3 = new TL.Timeline('timeline3', '{{ url_for('static', filename='data/nishant.json') }}', options);
+    // var timeline4 = new TL.Timeline('timeline4', '{{ url_for('static', filename='data/nishant.json') }}', options);
 
 
-    window.onresize = function(event) {
-        timeline1.updateDisplay();
-        timeline2.updateDisplay();
-        timeline3.updateDisplay();
-        timeline4.updateDisplay();
+    // window.onresize = function(event) {
+    //     timeline1.updateDisplay();
+    //     timeline2.updateDisplay();
+    //     timeline3.updateDisplay();
+    //     timeline4.updateDisplay();
 
-    }
-
-    
+    // }
 
     smoothScroll.init();
-
-    // $.notify({
-    //      icon: 'pe-7s-gift',
-    //      message: "Welcome to <b>Light Bootstrap Dashboard</b> - a beautiful freebie for every web developer."
-
-    //    },{
-    //        type: 'info',
-    //        timer: 4000
-    //    });
 
 });
 </script>

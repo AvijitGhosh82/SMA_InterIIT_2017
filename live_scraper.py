@@ -11,7 +11,7 @@ from Queue import Queue
 from threading import Thread, Condition, Lock
 import threading
 from threading import active_count as threading_active_count
-from torrequest import TorRequest
+# from torrequest import TorRequest
 import os
 import sys
 from bs4 import BeautifulSoup
@@ -39,18 +39,18 @@ class Worker(Thread):
         self.queue = queue
         self.discovery = discovery
         self.socks_proxy_port = socks_proxy_port
-        self.opener = TorRequest(
-            proxy_port=socks_proxy_port, ctrl_port=socks_proxy_port + 101, password=None)
+        # self.opener = TorRequest(
+            # proxy_port=socks_proxy_port, ctrl_port=socks_proxy_port + 101, password=None)
         self.df = pd.DataFrame()
 
-    def get_url(self, url):
-        try:
-            # h = urllib2.urlopen(url)
-            h = self.opener.get(url)
-            return h
+    # def get_url(self, url):
+    #     try:
+    #         # h = urllib2.urlopen(url)
+    #         h = self.opener.get(url)
+    #         return h
 
-        except:
-            pass
+    #     except:
+    #         pass
 
     def run(self):
         print "running"

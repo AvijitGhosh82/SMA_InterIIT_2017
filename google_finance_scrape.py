@@ -10,15 +10,25 @@ import pandas as pd
 import numpy as np
 
 
+
+NASDAQ=['AAPL', 'CSCO', 'INTC', 'MSFT']
+NYSE=['DIS', 'WMT', 'VZ', 'V', 'UTX', 'UNH', 'TRV', 'PG', 'PFE', 'NKE', 'MRK', 'MMM', 'MCD', 'JPM', 
+'JNJ', 'IBM', 'HD', 'GS', 'GE', 'XOM', 'DD', 'KO', 'CVX', 'CAT', 'BA', 'AXP']
+
 def google_finance(company_ticker):
     today = datetime.now()
     yesterday = today - timedelta(days=1)
     day_before_yesterday = yesterday - timedelta(days=1)
     yesterday = datetime.strftime(yesterday, "%Y-%m-%d")
     day_before_yesterday = datetime.strftime(day_before_yesterday, "%Y-%m-%d")
-    url = 'https://www.google.com/finance/company_news?q=NASDAQ%3A' + company_ticker + \
-        '&ei=ixzVWIG4F5WqugTCt5zIDQ&startdate=' + yesterday + '&enddate=' + \
+    if not company_ticker in NYSE:
+        url = 'https://www.google.com/finance/company_news?q=NASDAQ%3A' + company_ticker + \
+            '&ei=ixzVWIG4F5WqugTCt5zIDQ&startdate=' + yesterday + '&enddate=' + \
         day_before_yesterday + '&start=0&num=1000'
+    else:
+         url = 'https://www.google.com/finance/company_news?q=NYSE%3A' + company_ticker + \
+            '&ei=ixzVWIG4F5WqugTCt5zIDQ&startdate=' + yesterday + '&enddate=' + \
+        day_before_yesterday + '&start=0&num=1000'       
     print url
     response = requests.get(url)
     html = response.content

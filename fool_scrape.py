@@ -39,7 +39,7 @@ def fool(ticker):
                 if(abs(diff) in [1, 2]):
                     ''
                     heading = article.find('a', {'class': 'article-link'}).text
-                    link = 'https:' + article.find('a')['href']
+                    link =  article.find('a')['href']
                     try:
                         subresponse = requests.get(link)
                         subhtml = subresponse.content
@@ -56,7 +56,7 @@ def fool(ticker):
                         urls.append(link)
                         title.append(heading)
                     except Exception as e:
-                        print(e, subdict['link'])
+                        print(e)
                         # print(subdict['link'], end="\n", file=error_file_1)
                         continue
             except Exception as e:

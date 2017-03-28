@@ -16,7 +16,9 @@ sys.setdefaultencoding('UTF-8')
 
 #Function to take input a dataframe and return a dataframe with all the features as columns
 def predict_relevance(df):
-
+	if df.empty:
+		return pd.DataFrame()
+	
 	#Loading data into SFrame
 	df[[a for a in df.columns.values]] = df[[a for a in df.columns.values]].astype(str)
 	tf = gl.SFrame(data=df)
@@ -122,4 +124,5 @@ def predict_relevance(df):
 	relevant_out = relevant_news_out[relevant_news_out['class']==1].sort('probability',ascending=False)
 	non_relevant_out = relevant_news_out[relevant_news_out['class']==0].sort('probability')
 	output_df = relevant_out.append(non_relevant_out)
-	return output_df
+	output_dataframe = output_df.to_dataframe()
+	return output_dataframe
