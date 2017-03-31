@@ -3,8 +3,12 @@ import sys
 
 reload(sys)  
 sys.setdefaultencoding('utf8')
-import sys
+sys.path.append('scraper/')
+sys.path.append('model/')
+
+
 import os
+
 
 from flask import Flask
 from flask import Flask, render_template, url_for, request, session, redirect
@@ -17,7 +21,8 @@ import pandas as pd
 import numpy as np
 from live_scraper import start_scraper, read_df
 from relevance_predictor import predict_relevance
-sys.path.append('../')
+
+
 
 
 app = Flask(__name__)
@@ -51,8 +56,7 @@ def index():
 def index_post():
 	data_price = {}
 	p_scraper = PriceScraper()
-	# my_list = p_scraper.get_list(share) # delete this line
-	i = 5
+
 	a = len(TICKERS)
 	while (True):
 		try:
@@ -102,9 +106,7 @@ def index_post():
 			df = predict_relevance(read_df(ticker))
 			if df.empty:
 				break
-			temp_df = df[['url','title','content']]
-			temp_df.to_csv(ticker+'_required_out.csv',sep='\t',encoding='utf8')
-			df.to_csv(ticker + '_out.csv',sep='\t',encoding='utf8')
+			df.to_csv('scraper/data/'+ ticker + '_out.csv',sep='\t',encoding='utf8')
 		# global_df = read_df(top_tickers)
 	else:
 		print "ERROR"
