@@ -63,7 +63,7 @@ class Worker(Thread):
         print "-------------------->", self.ticker, self.df
         self.df['content'].replace('', np.nan, inplace=True)
         self.df.dropna(subset=['content'], inplace=True)
-        self.df.to_csv('data/'+ self.ticker + '.csv', sep="\t", encoding='utf8')
+        self.df.to_csv('scraper/data/'+ self.ticker + '.csv', sep="\t", encoding='utf8')
 
 
 class Discovery:
@@ -119,7 +119,7 @@ def start_scraper(tickers):
 def read_df(ticker):
     # df = pd.DataFrame()
     # for ticker in top_tickers:
-    data = pd.read_csv('data/'+ ticker + '.csv', sep="\t", encoding="utf8")
+    data = pd.read_csv('scraper/data/'+ ticker + '.csv', sep="\t", encoding="utf8")
     # .concat([df, data], ignore_index=True)
     return data
 if __name__ == '__main__':

@@ -12,7 +12,7 @@ sys.setdefaultencoding("UTF-8")
 
 
 def fool(ticker):
-    f = open("links_out", "r")
+    f = open("scraper/links_out", "r")
     links_dict = json.loads(f.read())
     ticker_symbols = {}
     url = links_dict[ticker.lower()]

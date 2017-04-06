@@ -16,24 +16,11 @@ sys.setdefaultencoding('UTF-8')
 
 #Function to take input a dataframe and return a dataframe with all the features as columns
 def predict_relevance(df):
-	if df.empty:
-		return pd.DataFrame()
-	
+
 	#Loading data into SFrame
 	df[[a for a in df.columns.values]] = df[[a for a in df.columns.values]].astype(str)
 	tf = gl.SFrame(data=df)
-
-	#Removing duplicate content and/or headline articles
-	tf = tf.add_row_number()
-	sf_url = tf[['id','url']]
-	sf_other = tf[[a for a in tf.column_names() if a.strip() != 'url']]
-	sf_other = sf_other.unique() 
-	tf = sf_url.join(sf_other)
-	tf = tf.remove_column('id')
-
-	#Removing rows with either content or title as NA/None
-	tf = tf.dropna('content', how="any")
-	tf = tf.dropna('title', how="any")
+	tf = tf.unique()
 
 	#Loading LDA model for topic modeling, pysentiment module for financial sentiment analysis and the relevance prediction model
 	lda = models.ldamodel.LdaModel.load('lda1.model')
@@ -111,18 +98,16 @@ def predict_relevance(df):
 	tf = tf.add_row_number()
 	pred = model.classify(tf)
 	pred = pred.add_row_number()
-	relevant = pred[pred['class']==1].sort('probability',ascending=False)
-	non_relevant = pred[pred['class']==0].sort('probability')
+	relevant = pred.sort('probability',ascending=False)[:10] 
+	relevant = pred[pred['class']==1]
+	non_relevant = pred[pred['class']==0]
 	if relevant.num_rows()>10:
-		relevant_news_out = relevant.join(tf)[:10]
+		relevant_news_out = tf.join(relevant).sort('probability',ascending=False)[:10]
 	else:
+		relevant_news = relevant.sort('probability',ascending=False)
 		req_num_non_relevant_news = 10 - relevant.num_rows()
-		non_relevant_news = non_relevant[:req_num_non_relevant_news]
-		relevant_news = relevant.append(non_relevant_news)
-		relevant_news_out = relevant_news.join(tf)
-
-	relevant_out = relevant_news_out[relevant_news_out['class']==1].sort('probability',ascending=False)
-	non_relevant_out = relevant_news_out[relevant_news_out['class']==0].sort('probability')
-	output_df = relevant_out.append(non_relevant_out)
-	output_dataframe = output_df.to_dataframe()
-	return output_dataframe
+		non_relevant_news = non_relevant.sort('probability')[:req_num_non_relevant_news]
+		relevant_news = relevant_news.append(non_relevant_news)
+		relevant_news_out = tf.join(relevant_news)
+	
+	return relevant_news_out
