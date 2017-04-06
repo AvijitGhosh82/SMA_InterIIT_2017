@@ -35,9 +35,8 @@ TICKERS = ['AAPL', 'CSCO', 'INTC', 'MSFT', 'DIS', 'WMT', 'VZ', 'V', 'UTX', 'UNH'
 NAMES = ['Apple', 'Cisco', 'Intel', 'Microsoft', 'Disney', 'Walmart', 'Verizon', 'Visa', 'United Technologies', 'United Health', 'The Travelers Inc.', 'Proctor and Gamble', 'Pfizer', 'Nike', 'Merck', '3M', 'Macdonalds', 'JPMorgan Chase', 'Johnson and Johnson', 'IBM', 'Home Depot', 'Goldman Sachs', 'General Electric', 'Exxon Mobile',
 		 'E I du Pont de Nemours and Co', 'Coca Cola', 'Chevron', 'Caterpillar', 'Boeing', 'American Express']
 
-global line_chart1, line_chart2, line_chart3, line_chart4
-global name_neg1, name_neg2, name_pos1, name_pos2, neg1, neg2, pos1, pos2
-global global_df
+global line_chart
+global name, ticker
 
 from pygal.style import BlueStyle, DefaultStyle
 
@@ -54,53 +53,31 @@ def index():
 
 @app.route('/index_post', methods=['POST'])
 def index_post():
-	data_price = {}
+
+	global line_chart
+	global name, ticker
+
+	ticker = request.form['share']
+
 	p_scraper = PriceScraper()
+	plist = p_scraper.get_list(ticker)[0]
+	name = NAMES[TICKERS.index(ticker)]
+	line_chart = pygal.Line(style=BlueStyle, disable_xml_declaration=True,
+							 height=200, show_y_labels=False, show_legend=False, dots_size=1, fill=True)
+	line_chart.force_uri_protocol = 'http'
 
-	a = len(TICKERS)
-	while (True):
-		try:
-			a -= 1
-			if (a == 0):
-				break
-			print("try", TICKERS[a])
-			tmp = p_scraper.get_list(TICKERS[a])
-			data_price[tmp[1]] = [TICKERS[a], tmp[0]]
-		except Exception as e:
-			print(e, TICKERS[a])
-			a += 1
-			continue
-	print("scraping prices done")
-	list_changes = list(data_price.keys())
-	list_changes.sort()
-	stocks = []
-	stocks.append(data_price[list_changes[0]])
-	stocks[len(stocks) - 1].append(list_changes[0])
-	stocks.append(data_price[list_changes[1]])
-	stocks[len(stocks) - 1].append(list_changes[1])
-	stocks.append(data_price[list_changes[len(list_changes) - 1]])
-	stocks[len(stocks) - 1].append(list_changes[len(list_changes) - 1])
-	stocks.append(data_price[list_changes[len(list_changes) - 2]])
-	stocks[len(stocks) - 1].append(list_changes[len(list_changes) - 2])
-	del data_price
-	print("app.py debug", "got four stocks", stocks[0][
-		  0], stocks[1][0], stocks[2][0], stocks[3][0])
+	line_chart.title = ticker + ' Stock'
 
+	pr = []
+	x = []
+	for p in plist:
+		pr.append(float(p[1]))
+		x.append(p[0])
 
-	global line_chart1, line_chart2, line_chart3, line_chart4
-	global name_neg1, name_neg2, name_pos1, name_pos2, neg1, neg2, pos1, pos2
+	line_chart.x_labels = x
+	line_chart.add(ticker, pr)
 
-	neg1 = stocks[0][0]
-	neg2 = stocks[1][0]
-	pos1 = stocks[2][0]
-	pos2 = stocks[3][0]
-
-	name_neg1 = NAMES[TICKERS.index(neg1)]
-	name_neg2 = NAMES[TICKERS.index(neg2)]
-	name_pos1 = NAMES[TICKERS.index(pos1)]
-	name_pos2 = NAMES[TICKERS.index(pos2)]
-
-	top_tickers = [neg1, neg2, pos1, pos2]
+	top_tickers = [ticker]
 	if start_scraper(top_tickers) == 1:
 		for i, ticker in enumerate(top_tickers):
 			df = predict_relevance(read_df(ticker))
@@ -111,73 +88,6 @@ def index_post():
 	else:
 		print "ERROR"
 
-	# Most Pos
-
-	line_chart1 = pygal.Line(style=BlueStyle, disable_xml_declaration=True,
-							 height=200, show_y_labels=False, show_legend=False, dots_size=1, fill=True)
-	line_chart1.force_uri_protocol = 'http'
-
-	line_chart1.title = pos2 + ' Stock'
-
-	pr1 = []
-	x1 = []
-	for p in stocks[3][1]:
-		pr1.append(float(p[1]))
-		x1.append(p[0])
-
-	line_chart1.x_labels = x1
-	line_chart1.add(pos2, pr1)
-
-	# Second most pos
-
-	line_chart2 = pygal.Line(style=BlueStyle, disable_xml_declaration=True,
-							 height=200, show_y_labels=False, show_legend=False, dots_size=1, fill=True)
-	line_chart2.force_uri_protocol = 'http'
-	line_chart2.title = pos1 + ' Stock'
-
-	pr2 = []
-	x2 = []
-	for p in stocks[2][1]:
-		pr2.append(float(p[1]))
-		x2.append(p[0])
-
-	line_chart2.x_labels = x1
-	line_chart2.add(pos1, pr2)
-
-	# Second most neg
-
-	line_chart3 = pygal.Line(style=DefaultStyle, disable_xml_declaration=True,
-							 height=200, show_y_labels=False, show_legend=False, dots_size=1, fill=True)
-	line_chart3.force_uri_protocol = 'http'
-
-	line_chart3.title = neg2 + ' Stock'
-
-	pr3 = []
-	x3 = []
-	for p in stocks[1][1]:
-		pr3.append(float(p[1]))
-		x3.append(p[0])
-
-	line_chart3.x_labels = x3
-	line_chart3.add(pos1, pr3)
-
-	# Most neg
-
-	line_chart4 = pygal.Line(style=DefaultStyle, disable_xml_declaration=True,
-							 height=200, show_y_labels=False, show_legend=False, dots_size=1, fill=True)
-	line_chart4.force_uri_protocol = 'http'
-
-	line_chart4.title = neg1 + ' Stock'
-
-	pr4 = []
-	x4 = []
-	for p in stocks[0][1]:
-		pr4.append(float(p[1]))
-		x4.append(p[0])
-
-	line_chart4.x_labels = x4
-	line_chart4.add(pos2, pr4)
-
 	return redirect(url_for('panel'))
 
 
@@ -187,7 +97,7 @@ import csv
 output_pd = []
 
 def get_list(ticker):
-	f = open(ticker +  '_out.csv')
+	f = open('scraper/data/'+ticker +  '_out.csv')
 	a = csv.reader(f, delimiter = '\t')
 	data = []
 	for b in a:
@@ -205,11 +115,8 @@ def get_list(ticker):
 
 @app.route("/panel")
 def panel():
-	share = session.get('share', None)
 
-	return render_template('panel.html', line_chart1=line_chart1,line_chart2=line_chart2, line_chart3=line_chart3, line_chart4=line_chart4, 
-		pos1=pos1, pos2=pos2, neg1=neg1,neg2=neg2,name_pos1=name_pos1,name_pos2=name_pos2, name_neg1=name_neg1, name_neg2=name_neg2
-		,list1=get_list(pos1), list2=get_list(pos2), list3=get_list(neg1), list4=get_list(neg2))
+	return render_template('panel.html', line_chart=line_chart,ticker=ticker, name=name,list_news=get_list(ticker))
 
 
 

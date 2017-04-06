@@ -59,10 +59,10 @@
                     <li>
                         <a data-scroll href="#c1">
                             <i class="pe-7s-plus"></i>
-                            <p>{{name_pos2}}</p>
+                            <p>{{name}}</p>
                         </a>
                     </li>
-                    <li>
+                   <!--  <li>
                         <a data-scroll href="#c2">
                             <i class="pe-7s-plus"></i>
                             <p>{{name_pos1}}</p>
@@ -79,38 +79,25 @@
                             <i class="pe-7s-plus"></i>
                             <p>{{name_neg1}}</p>
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </div>
         <div class="main-panel">
-            <!-- <nav class="navbar navbar-default navbar-fixed">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="#">Dashboard</a>
-                    </div>
-                </div>
-            </nav> -->
             <div class="content">
                 <div class="container-fluid">
-                    <h1 id="c1">{{name_pos2}}</h1>
+                    <h1 id="c1">{{name}}</h1>
                     <!-- <p>Yesterday's Price:</p>
                     <p>Today's Price:</p>
                     <p>Return:</p> -->
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card" id="prices">
-                                {{ line_chart1.render()|safe }}
+                                {{ line_chart.render()|safe }}
                             </div>
                         </div>
                     </div>
-                    {% for item in list2 %}
+                    {% for item in list_news %}
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
@@ -128,7 +115,7 @@
                         </div>
                     </div>
                     {% endfor %}
-                    <h1 id="c2">{{name_pos1}}</h1>
+                    <!-- <h1 id="c2">{{name_pos1}}</h1>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
@@ -149,7 +136,6 @@
                                     <h6>Score: {{item[5]}}</h6>
                                     <h6>Polarity: {{item[4]}}</h6>
                                 </div>
-                                <!-- <div id="timeline2"></div> -->
                             </div>
                         </div>
                     </div>
@@ -169,14 +155,12 @@
                                 <div class="header">
                                     <h4 class="title"><a href="{{item[0]}}">{{item[2]}}</a></h4>
                                     <p class="category">{{item[1]}}</p>
-                                    <!-- <img src="{{item[6]}}"/> -->
                                 </div>
                                 <div class="content">
                                     <p>{{item[3]}}</p>
                                     <h6>Score: {{item[5]}}</h6>
                                     <h6>Polarity: {{item[4]}}</h6>
                                 </div>
-                                <!-- <div id="timeline3"></div> -->
                             </div>
                         </div>
                     </div>
@@ -202,11 +186,10 @@
                                     <h6>Score: {{item[5]}}</h6>
                                     <h6>Polarity: {{item[4]}}</h6>
                                 </div>
-                                <!-- <div id="timeline4"> -->
                             </div>
                         </div>
                     </div>
-                    {% endfor %}
+                    {% endfor %} -->
                 </div>
             </div>
         </div>
