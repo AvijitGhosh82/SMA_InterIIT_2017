@@ -28,3 +28,5 @@ IIT Kharagpur
 - requests==2.6.0
 - pandas-datareader
 - pillow
+- graphlab
+- texstat
