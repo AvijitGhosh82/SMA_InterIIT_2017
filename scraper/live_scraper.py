@@ -40,7 +40,8 @@ class Worker(Thread):
         self.discovery = discovery
         self.socks_proxy_port = socks_proxy_port
         # self.opener = TorRequest(
-            # proxy_port=socks_proxy_port, ctrl_port=socks_proxy_port + 101, password=None)
+        # proxy_port=socks_proxy_port, ctrl_port=socks_proxy_port + 101,
+        # password=None)
         self.df = pd.DataFrame()
 
     # def get_url(self, url):
@@ -63,7 +64,8 @@ class Worker(Thread):
         print "-------------------->", self.ticker, self.df
         self.df['content'].replace('', np.nan, inplace=True)
         self.df.dropna(subset=['content'], inplace=True)
-        self.df.to_csv('scraper/data/'+ self.ticker + '.csv', sep="\t", encoding='utf8')
+        self.df.to_csv('scraper/data/' + self.ticker +
+                       '.csv', sep="\t", encoding='utf8')
 
 
 class Discovery:
@@ -99,12 +101,11 @@ class Discovery:
         print "Queue finished with:", self.queue.qsize(), "elements"
 
 
-def start_scraper(tickers):
-    top_tickers = tickers
+def start_scraper():
     start = time.time()
 
     # get_top_tickers()
-    discovery = Discovery(tickers)
+    discovery = Discovery(TICKERS)
     discovery.start()
 # for ticker in top_tickers:
 #     data = pd.read_csv(ticker + '.csv', sep="\t", encoding="utf8")
@@ -119,8 +120,9 @@ def start_scraper(tickers):
 def read_df(ticker):
     # df = pd.DataFrame()
     # for ticker in top_tickers:
-    data = pd.read_csv('scraper/data/'+ ticker + '.csv', sep="\t", encoding="utf8")
+    data = pd.read_csv('scraper/data/' + ticker +
+                       '.csv', sep="\t", encoding="utf8")
     # .concat([df, data], ignore_index=True)
     return data
 if __name__ == '__main__':
-    start_scraper("V")
+    start_scraper()

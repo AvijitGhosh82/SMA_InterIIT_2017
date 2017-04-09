@@ -11,8 +11,10 @@ from gensim import corpora, models
 import data_clean as dc
 import numpy as np
 import sys
+import os
 reload(sys)
 sys.setdefaultencoding('UTF-8')
+sys.path.append('/')
 
 #Function to take input a dataframe and return a dataframe with all the features as columns
 def predict_relevance(df):
@@ -23,9 +25,9 @@ def predict_relevance(df):
 	tf = tf.unique()
 
 	#Loading LDA model for topic modeling, pysentiment module for financial sentiment analysis and the relevance prediction model
-	lda = models.ldamodel.LdaModel.load('lda1.model')
+	lda = models.ldamodel.LdaModel.load(os.getcwd() + '/model/lda1.model')
 	lm = py.LM()
-	model = gl.load_model('relevance_model_64feat')
+	model = gl.load_model(os.getcwd() + '/model/relevance_model_64feat')
 
 	#Building the LDA model using news articles
 	tf['tokens'] = tf['content'].apply(lambda x: dc.tokenize_doc(x,'STEM'))
@@ -110,4 +112,5 @@ def predict_relevance(df):
 		relevant_news = relevant_news.append(non_relevant_news)
 		relevant_news_out = tf.join(relevant_news)
 	
-	return relevant_news_out
+	print relevant_news_out
+	return relevant_news_out.to_dataframe()
