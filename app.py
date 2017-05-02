@@ -136,7 +136,7 @@ def panel():
 
 
 if __name__ == "__main__":
-    if not os.path.exists('./scraper/data'):
+	if not os.path.exists('./scraper/data'):
 		print('Making directory scraper/data to store scraped csv files.')
     		os.makedirs('./scraper/data')
 	else:
