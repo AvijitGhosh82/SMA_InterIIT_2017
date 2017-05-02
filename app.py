@@ -136,6 +136,11 @@ def panel():
 
 
 if __name__ == "__main__":
+    if not os.path.exists('./scraper/data'):
+		print('Making directory scraper/data to store scraped csv files.')
+    		os.makedirs('./scraper/data')
+	else:
+		print('Scraped csv files will be stored into scraper/data.')
     app.secret_key = 'sma_interiit'
     app.config['SESSION_TYPE'] = 'filesystem'
     sess.init_app(app)
