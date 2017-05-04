@@ -110,4 +110,4 @@ def predict_relevance(df):
 		relevant_news = relevant_news.append(non_relevant_news)
 		relevant_news_out = tf.join(relevant_news)
 	
-	return relevant_news_out
+	return relevant_news_out.to_dataframe()
